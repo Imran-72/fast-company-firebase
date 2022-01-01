@@ -17,7 +17,7 @@ const AuthProvider = ({ children }) => {
     const [error, setError] = useState(null);
 
     async function singUp({ email, password, ...rest }) {
-        const url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.REACT_APP_FIREBASE_KEY}`;
+        const url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${"AIzaSyAgKBu_KM1vOqS0jEvABuFlvzhw9DxkDyU"}`;
 
         try {
             const { data } = await httpAuth.post(url, {
@@ -29,6 +29,15 @@ const AuthProvider = ({ children }) => {
             await createUser({ _id: data.localId, email, ...rest });
         } catch (error) {
             errorCatcher(error);
+            const { code, message } = error.response.data.error;
+            if (code === 400) {
+                if (message === "EMAIL_EXISTS") {
+                    const errorObject = {
+                        email: "Пользователь с таким Email уже существует"
+                    };
+                    throw errorObject;
+                }
+            }
         }
     }
 
