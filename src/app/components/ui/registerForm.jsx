@@ -88,6 +88,7 @@ const RegisterForm = () => {
     const isValid = Object.keys(errors).length === 0;
 
     const { singUp } = useAuth();
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const isValid = validate();

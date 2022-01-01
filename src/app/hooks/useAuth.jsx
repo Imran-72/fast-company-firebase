@@ -5,7 +5,12 @@ import axios from "axios";
 import userService from "../services/user.service";
 import { setTokens } from "../services/localStorageService";
 
-const httpAuth = axios.create();
+const httpAuth = axios.create({
+    baseURL: `https://identitytoolkit.googleapis.com/v1/`,
+    params: {
+        key: "AIzaSyAgKBu_KM1vOqS0jEvABuFlvzhw9DxkDyU"
+    }
+});
 const AuthContext = React.createContext();
 
 export const useAuth = () => {
@@ -17,7 +22,7 @@ const AuthProvider = ({ children }) => {
     const [error, setError] = useState(null);
 
     async function singUp({ email, password, ...rest }) {
-        const url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${"AIzaSyAgKBu_KM1vOqS0jEvABuFlvzhw9DxkDyU"}`;
+        const url = `accounts:signUp`;
 
         try {
             const { data } = await httpAuth.post(url, {
@@ -50,6 +55,31 @@ const AuthProvider = ({ children }) => {
         }
     }
 
+    async function singIn({ email, password }) {
+        const url = `accounts:signInWithPassword`;
+
+        try {
+            const { data } = await httpAuth.post(url, {
+                email,
+                password,
+                returnSequreToken: true
+            });
+            setTokens(data);
+        } catch (error) {
+            const { code, message } = error.response.data.error;
+            if (code === 400) {
+                switch (message) {
+                    case "INVALID_PASSWORD":
+                        throw new Error("Email или пароль введены некорректно");
+                    default:
+                        throw new Error(
+                            "Слишком много попыток входа. Попробуйте позднее"
+                        );
+                }
+            }
+        }
+    }
+
     function errorCatcher(error) {
         const { message } = error.response.data;
         setError(message);
@@ -61,7 +91,7 @@ const AuthProvider = ({ children }) => {
         }
     }, [error]);
     return (
-        <AuthContext.Provider value={{ singUp, currentUser }}>
+        <AuthContext.Provider value={{ singUp, singIn, currentUser }}>
             {children}
         </AuthContext.Provider>
     );
