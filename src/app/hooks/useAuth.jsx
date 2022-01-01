@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import PropTypes from "prop-types";
 import axios from "axios";
 import userService from "../services/user.service";
+import { setTokens } from "../services/localStorageService";
 
 const httpAuth = axios.create();
 const AuthContext = React.createContext();
@@ -11,25 +12,12 @@ export const useAuth = () => {
     return useContext(AuthContext);
 };
 
-const TOKEN_KEY = "jwt_token";
-const REFRESH_TOKEN = "jwt-refresh-token";
-const EXPIRES_KEY = "jwt_expires";
-
 const AuthProvider = ({ children }) => {
     const [currentUser, setUser] = useState();
     const [error, setError] = useState(null);
 
-    function setTokens({ refreshToken, idToken, expiresIn = 3600 }) {
-        const expiresData = new Date().getTime() + expiresIn * 1000;
-
-        localStorage.setItem(TOKEN_KEY, refreshToken);
-        localStorage.setItem(REFRESH_TOKEN, idToken);
-        localStorage.setItem(EXPIRES_KEY, expiresData);
-    }
-
     async function singUp({ email, password, ...rest }) {
-        const key = "AIzaSyAgKBu_KM1vOqS0jEvABuFlvzhw9DxkDyU";
-        const url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${key}`;
+        const url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.REACT_APP_FIREBASE_KEY}`;
 
         try {
             const { data } = await httpAuth.post(url, {
