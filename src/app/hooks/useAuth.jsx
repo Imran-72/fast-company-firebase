@@ -3,7 +3,9 @@ import { toast } from "react-toastify";
 import PropTypes from "prop-types";
 import axios from "axios";
 import userService from "../services/user.service";
-import { setTokens } from "../services/localStorageService";
+import localStorageService, {
+    setTokens
+} from "../services/localStorageService";
 
 const httpAuth = axios.create({
     baseURL: `https://identitytoolkit.googleapis.com/v1/`,
@@ -74,6 +76,7 @@ const AuthProvider = ({ children }) => {
                 returnSequreToken: true
             });
             setTokens(data);
+            getUserData();
         } catch (error) {
             const { code, message } = error.response.data.error;
             if (code === 400) {
@@ -93,6 +96,19 @@ const AuthProvider = ({ children }) => {
         const { message } = error.response.data;
         setError(message);
     }
+    async function getUserData() {
+        try {
+            const { content } = await userService.getCurrentUser();
+            setUser(content);
+        } catch (error) {
+            errorCatcher(error);
+        }
+    }
+    useEffect(() => {
+        if (localStorageService.getAccessToken()) {
+            getUserData();
+        }
+    }, []);
     useEffect(() => {
         if (error !== null) {
             toast(error);
