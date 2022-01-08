@@ -7,7 +7,7 @@ import localStorageService, {
     setTokens
 } from "../services/localStorageService";
 
-const httpAuth = axios.create({
+export const httpAuth = axios.create({
     baseURL: `https://identitytoolkit.googleapis.com/v1/`,
     params: {
         key: "AIzaSyAgKBu_KM1vOqS0jEvABuFlvzhw9DxkDyU"
