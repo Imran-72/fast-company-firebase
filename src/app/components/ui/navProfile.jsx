@@ -12,7 +12,7 @@ const NavProfile = () => {
     return (
         <div className="dropdown" onClick={toggleMenu}>
             <div className="btn dropdown-toggle d-flex align-items-center">
-                <div className="me-2">User</div>
+                <div className="me-2">{currentUser.name}</div>
                 <img
                     src={`https://avatars.dicebear.com/api/avataaars/${(
                         Math.random() + 1
