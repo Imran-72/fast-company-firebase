@@ -27,9 +27,9 @@ const NavBar = () => {
                     )}
                 </ul>
                 <div className="d-flex">
-                    {/* {currentUser ? ( */}
-                    <NavProfile />
-                    {/* ) : (
+                    {currentUser ? (
+                        <NavProfile />
+                    ) : (
                         <Link
                             className="nav-link "
                             aria-current="page"
@@ -37,7 +37,7 @@ const NavBar = () => {
                         >
                             Login
                         </Link>
-                    )} */}
+                    )}
                 </div>
             </div>
         </div>

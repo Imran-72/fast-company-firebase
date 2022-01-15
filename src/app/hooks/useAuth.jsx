@@ -33,7 +33,7 @@ const AuthProvider = ({ children }) => {
             const { data } = await httpAuth.post(url, {
                 email,
                 password,
-                returnSequreToken: true
+                returnSecureToken: true
             });
             setTokens(data);
             await createUser({
@@ -73,8 +73,9 @@ const AuthProvider = ({ children }) => {
             const { data } = await httpAuth.post(url, {
                 email,
                 password,
-                returnSequreToken: true
+                returnSecureToken: true
             });
+            console.log("singIn", data);
             setTokens(data);
             getUserData();
         } catch (error) {

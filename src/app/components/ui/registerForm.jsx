@@ -16,8 +16,8 @@ const RegisterForm = () => {
         email: "",
         password: "",
         profession: "",
-        name: "",
         sex: "male",
+        name: "",
         qualities: [],
         licence: false
     });

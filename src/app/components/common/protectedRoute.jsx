@@ -1,7 +1,7 @@
 import React from "react";
-import { Redirect } from "react-router-dom";
-import { Route } from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
+import PropTypes from "prop-types";
 
 const ProtectedRoute = ({ component: Component, children, ...rest }) => {
     const { currentUser } = useAuth();
@@ -18,4 +18,11 @@ const ProtectedRoute = ({ component: Component, children, ...rest }) => {
     );
 };
 
+ProtectedRoute.propTypes = {
+    component: PropTypes.func,
+    children: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.node),
+        PropTypes.node
+    ])
+};
 export default ProtectedRoute;

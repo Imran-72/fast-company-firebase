@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-// import { useAuth } from "../../hooks/useAuth";
+import { useAuth } from "../../hooks/useAuth";
 
 const NavProfile = () => {
-    // const { currentUser } = useAuth();
+    const { currentUser } = useAuth();
     const [isOpen, setOpen] = useState();
 
     const toggleMenu = () => {
@@ -25,8 +25,7 @@ const NavProfile = () => {
                 />
             </div>
             <div className={"w-100 dropdown-menu" + (isOpen ? " show" : "")}>
-                {/* <Link to={`/user/${currentUser._id}`} className="dropdown-item"> */}
-                <Link to={`/user/`} className="dropdown-item">
+                <Link to={`/user/${currentUser._id}`} className="dropdown-item">
                     Profile
                 </Link>
                 <Link to="logout" className="dropdown-item">
