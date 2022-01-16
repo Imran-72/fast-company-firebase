@@ -77,7 +77,7 @@ const AuthProvider = ({ children }) => {
                 returnSecureToken: true
             });
             setTokens(data);
-            getUserData();
+            await getUserData();
         } catch (error) {
             const { code, message } = error.response.data.error;
             if (code === 400) {
