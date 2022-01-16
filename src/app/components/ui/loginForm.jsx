@@ -7,7 +7,6 @@ import { useHistory } from "react-router-dom";
 
 const LoginForm = () => {
     const history = useHistory();
-    console.log(history.location.state.from.pathname);
     const { singIn } = useAuth();
     const [data, setData] = useState({
         email: "",

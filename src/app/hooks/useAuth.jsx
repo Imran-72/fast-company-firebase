@@ -48,6 +48,11 @@ const AuthProvider = ({ children }) => {
             await createUser({
                 _id: data.localId,
                 email,
+                image: `https://avatars.dicebear.com/api/avataaars/${(
+                    Math.random() + 1
+                )
+                    .toString(36)
+                    .substring(7)}.svg`,
                 rate: randomInt(1, 5),
                 completedMeetings: randomInt(0, 200),
                 ...rest
