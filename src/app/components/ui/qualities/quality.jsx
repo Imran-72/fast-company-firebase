@@ -9,7 +9,6 @@ const Quality = ({ id }) => {
             {name}
         </span>
     );
-    // return "something";
 };
 Quality.propTypes = {
     id: PropTypes.string.isRequired

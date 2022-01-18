@@ -17,12 +17,17 @@ export const CommentsProvider = ({ children }) => {
     const [isLoading, setLoading] = useState(true);
     const { userId } = useParams();
     const { currentUser } = useAuth();
-    const [comments, setComments] = useState();
+    const [comments, setComments] = useState([]);
 
     useEffect(() => {
         getComments();
     }, []);
 
+    // useEffect(() => {
+    //     if (comments.length === 0) {
+    //         localStorage.removeItem("Newcomments");
+    //     }
+    // }, [comments]);
     async function createComment(data) {
         const comment = {
             ...data,
@@ -61,6 +66,11 @@ export const CommentsProvider = ({ children }) => {
         }
     }
 
+    function removeComment(id) {
+        setComments((prev) => prev.filter((c) => c._id !== id));
+        localStorage.removeItem("Newcomments");
+        // addToLocalStorage(...comments);
+    }
     // async function getComments() {
     //     try {
     //         const { content } = await commentService.getComments(userId);
@@ -84,7 +94,7 @@ export const CommentsProvider = ({ children }) => {
     }, [error]);
     return (
         <CommentsContext.Provider
-            value={{ comments, createComment, isLoading }}
+            value={{ comments, createComment, isLoading, removeComment }}
         >
             {children}
         </CommentsContext.Provider>
