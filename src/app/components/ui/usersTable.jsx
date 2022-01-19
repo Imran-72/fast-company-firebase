@@ -1,25 +1,23 @@
 import React from "react";
 import PropTypes from "prop-types";
-
 import BookMark from "../common/bookmark";
 import Qualities from "./qualities";
 import Table from "../common/table";
 import { Link } from "react-router-dom";
 import Profession from "./profession";
 
-const UserTable = ({
-    users,
-    onSort,
-    selectedSort,
-    onToggleBookMark,
-    ...rest
-}) => {
+const UserTable = ({ users, onSort, selectedSort, onToggleBookMark }) => {
     const columns = {
         name: {
             path: "name",
             name: "Имя",
             component: (user) => (
-                <Link to={`/users/${user._id}`}>{user.name}</Link>
+                <Link
+                    to={`/users/${user._id}`}
+                    style={{ textDecoration: "none", color: "blue" }}
+                >
+                    {user.name}
+                </Link>
             )
         },
         qualities: {

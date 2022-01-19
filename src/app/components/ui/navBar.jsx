@@ -26,7 +26,7 @@ const NavBar = () => {
                         </li>
                     )}
                 </ul>
-                <div className="d-flex">
+                <>
                     {currentUser ? (
                         <NavProfile />
                     ) : (
@@ -38,7 +38,7 @@ const NavBar = () => {
                             Login
                         </Link>
                     )}
-                </div>
+                </>
             </div>
         </div>
     );
