@@ -11,7 +11,7 @@ import { useHistory } from "react-router-dom";
 export const httpAuth = axios.create({
     baseURL: `https://identitytoolkit.googleapis.com/v1/`,
     params: {
-        key: "AIzaSyAgKBu_KM1vOqS0jEvABuFlvzhw9DxkDyU"
+        key: "AIzaSyClG1I1CCUnIU4Bq_vxiGqpdNM00qlmMho"
     }
 });
 const AuthContext = React.createContext();

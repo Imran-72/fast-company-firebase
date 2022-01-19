@@ -17,17 +17,16 @@ export const CommentsProvider = ({ children }) => {
     const [isLoading, setLoading] = useState(true);
     const { userId } = useParams();
     const { currentUser } = useAuth();
-    const [comments, setComments] = useState([]);
+    const [comments, setComments] = useState();
 
     useEffect(() => {
         getComments();
     }, []);
 
-    // useEffect(() => {
-    //     if (comments.length === 0) {
-    //         localStorage.removeItem("Newcomments");
-    //     }
-    // }, [comments]);
+    useEffect(() => {
+        addToLocalStorage();
+    }, [createComment]);
+
     async function createComment(data) {
         const comment = {
             ...data,
@@ -39,20 +38,17 @@ export const CommentsProvider = ({ children }) => {
         try {
             const { content } = await commentService.createComment(comment);
             setComments((prev) => [...prev, content]);
-            addToLocalStorage(content);
         } catch (error) {
             errorCatcher(error);
         }
     }
 
-    function addToLocalStorage(comments) {
-        const all = getCommentsFromLocalStorage();
-        all.push(comments);
-        localStorage.setItem("Newcomments", JSON.stringify(all));
+    function addToLocalStorage() {
+        localStorage.setItem("Newcomments", JSON.stringify(comments));
     }
 
     function getCommentsFromLocalStorage() {
-        return JSON.parse(localStorage.getItem("Newcomments") || "[]");
+        return JSON.parse(localStorage.getItem("Newcomments"));
     }
 
     async function getComments() {
@@ -68,9 +64,8 @@ export const CommentsProvider = ({ children }) => {
 
     function removeComment(id) {
         setComments((prev) => prev.filter((c) => c._id !== id));
-        localStorage.removeItem("Newcomments");
-        // addToLocalStorage(...comments);
     }
+
     // async function getComments() {
     //     try {
     //         const { content } = await commentService.getComments(userId);
