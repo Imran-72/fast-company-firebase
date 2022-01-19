@@ -17,12 +17,17 @@ const Login = () => {
     return (
         <div className="container mt-5">
             <div className="row">
-                <div className="col-md-6 offset-md-3 shadow p-4">
+                <div
+                    className="col-md-6 offset-md-3 shadow p-4"
+                    style={{ borderRadius: "10px" }}
+                >
                     {formType === "register" ? (
                         <>
-                            <h3 className="mb-4">Register</h3>
+                            <h3 className="d-flex justify-content-center mb-4">
+                                Register
+                            </h3>
                             <RegisterForm />
-                            <p>
+                            <p className="mt-2">
                                 Already have account?{" "}
                                 <a role="button" onClick={toggleFormType}>
                                     {" "}
@@ -32,9 +37,11 @@ const Login = () => {
                         </>
                     ) : (
                         <>
-                            <h3 className="mb-4">Login</h3>
+                            <h3 className="d-flex justify-content-center mb-4">
+                                Login
+                            </h3>
                             <LoginForm />
-                            <p>
+                            <p className="mt-2">
                                 Dont have account?{" "}
                                 <a role="button" onClick={toggleFormType}>
                                     {" "}
