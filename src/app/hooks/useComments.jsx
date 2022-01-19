@@ -48,7 +48,7 @@ export const CommentsProvider = ({ children }) => {
     }
 
     function getCommentsFromLocalStorage() {
-        return JSON.parse(localStorage.getItem("Newcomments"));
+        return JSON.parse(localStorage.getItem("Newcomments") || "[]");
     }
 
     async function getComments() {
