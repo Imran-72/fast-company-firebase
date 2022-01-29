@@ -93,7 +93,7 @@ const UsersListPage = () => {
                     </button>
                 </div>
             )}
-            <div className="d-flex flex-column">
+            <div className="d-flex flex-column mt-3">
                 <SearchStatus length={count} />
                 <input
                     type="text"
