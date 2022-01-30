@@ -6,15 +6,15 @@ import GroupList from "../../common/groupList";
 import SearchStatus from "../../ui/searchStatus";
 import UserTable from "../../ui/usersTable";
 import _ from "lodash";
-import { useUser } from "../../../hooks/useUsers";
 import { useAuth } from "../../../hooks/useAuth";
 import { useSelector } from "react-redux";
 import {
     getProfessions,
     getProfessionsLoadingStatus
 } from "../../../store/professions";
+import { getUsersList } from "../../../store/users";
 const UsersListPage = () => {
-    const { users } = useUser();
+    const users = useSelector(getUsersList());
     const { currentUser } = useAuth();
     const [currentPage, setCurrentPage] = useState(1);
     const professions = useSelector(getProfessions());
