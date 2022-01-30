@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-// import { useHistory, useParams } from "react-router-dom";
 import { validator } from "../../../utils/validator";
 import TextField from "../../common/form/textField";
 import SelectField from "../../common/form/selectField";
@@ -7,14 +6,16 @@ import RadioField from "../../common/form/radio.Field";
 import MultiSelectField from "../../common/form/multiSelectField";
 import BackHistoryButton from "../../common/backButton";
 import { useProfessions } from "../../../hooks/useProfession";
-import { useQualities } from "../../../hooks/useQualities";
+import { useSelector } from "react-redux";
+import {
+    getQualities,
+    getQualitiesLoadingStatus
+} from "../../../store/qualities";
 
 const EditUserPage = () => {
     const { professions } = useProfessions();
-    const { qualities } = useQualities();
-    // const { userId } = useParams();
-    // const history = useHistory();
-    const [isLoading] = useState(false);
+    const qualities = useSelector(getQualities());
+    const qualitiesLoading = useSelector(getQualitiesLoadingStatus());
     const [data, setData] = useState({
         email: "",
         password: "",
@@ -36,8 +37,6 @@ const EditUserPage = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // const isValid = validate();
-        // if (!isValid) return;
     };
 
     const validatorConfog = {
@@ -74,7 +73,8 @@ const EditUserPage = () => {
             <BackHistoryButton />
             <div className="row">
                 <div className="col-md-6 offset-md-3 shadow p-4">
-                    {!isLoading && Object.keys(professions).length > 0 ? (
+                    {!qualitiesLoading &&
+                    Object.keys(professions).length > 0 ? (
                         <form onSubmit={handleSubmit}>
                             <TextField
                                 label="Имя"

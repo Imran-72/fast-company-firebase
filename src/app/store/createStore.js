@@ -1,9 +1,14 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
+import qualitiesReducer from "./qualities";
 
-const rootReducer = combineReducers({});
+const rootReducer = combineReducers({
+    qualities: qualitiesReducer
+});
 
-export function createStore() {
+function createStore() {
     return configureStore({
         reducer: rootReducer
     });
 }
+
+export default createStore;

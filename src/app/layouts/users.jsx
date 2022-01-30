@@ -18,7 +18,7 @@ const Users = () => {
             ) : (
                 <div className="container">
                     <div className="row">
-                        <div className="col-md-10 offset-md-2">
+                        <div className="col-md-10 offset-md-1">
                             <UsersListPage />
                         </div>
                     </div>
