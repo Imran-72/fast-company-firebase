@@ -1,7 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
+import { Redirect, useParams } from "react-router-dom";
 import EditUserPage from "../components/page/editUserPage";
 import UserPage from "../components/page/userPage";
 import UsersListPage from "../components/page/usersListPage";

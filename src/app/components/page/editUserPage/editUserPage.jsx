@@ -5,39 +5,82 @@ import SelectField from "../../common/form/selectField";
 import RadioField from "../../common/form/radio.Field";
 import MultiSelectField from "../../common/form/multiSelectField";
 import BackHistoryButton from "../../common/backButton";
-import { useSelector } from "react-redux";
+
+import { useSelector, useDispatch } from "react-redux";
 import {
     getQualities,
     getQualitiesLoadingStatus
 } from "../../../store/qualities";
-import { getProfessions } from "../../../store/professions";
+import {
+    getProfessions,
+    getProfessionsLoadingStatus
+} from "../../../store/professions";
+import { getCurrentUserData, updateUserData } from "../../../store/users";
 
 const EditUserPage = () => {
-    const professions = useSelector(getProfessions());
+    const dispatch = useDispatch();
+    const [isLoading, setIsLoading] = useState(true);
+    const [data, setData] = useState();
+    const currentUser = useSelector(getCurrentUserData());
     const qualities = useSelector(getQualities());
+    const professions = useSelector(getProfessions());
     const qualitiesLoading = useSelector(getQualitiesLoadingStatus());
-    const [data, setData] = useState({
-        email: "",
-        password: "",
-        profession: "",
-        sex: "male",
-        name: "",
-        qualities: []
-    });
-
-    const professionList = professions.map((p) => ({
-        label: p.name,
-        value: p._id
-    }));
+    const professionLoading = useSelector(getProfessionsLoadingStatus());
     const qualitiesList = qualities.map((q) => ({
         label: q.name,
         value: q._id
     }));
+    const professionsList = professions.map((p) => ({
+        label: p.name,
+        value: p._id
+    }));
+
     const [errors, setErrors] = useState({});
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        const isValid = validate();
+        if (!isValid) return;
+        dispatch(
+            updateUserData({
+                ...data,
+                qualities: data.qualities.map((q) => q.value)
+            })
+        );
     };
+    function getQualitiesListByIds(qualitiesIds) {
+        const qualitiesArray = [];
+        for (const qualId of qualitiesIds) {
+            for (const quality of qualities) {
+                if (quality._id === qualId) {
+                    qualitiesArray.push(quality);
+                    break;
+                }
+            }
+        }
+        return qualitiesArray;
+    }
+    const transformData = (data) => {
+        const result = getQualitiesListByIds(data).map((qual) => ({
+            label: qual.name,
+            value: qual._id
+        }));
+
+        return result;
+    };
+    useEffect(() => {
+        if (!professionLoading && !qualitiesLoading && currentUser && !data) {
+            setData({
+                ...currentUser,
+                qualities: transformData(currentUser.qualities)
+            });
+        }
+    }, [professionLoading, qualitiesLoading, currentUser, data]);
+    useEffect(() => {
+        if (data && isLoading) {
+            setIsLoading(false);
+        }
+    }, [data]);
 
     const validatorConfog = {
         email: {
@@ -73,8 +116,7 @@ const EditUserPage = () => {
             <BackHistoryButton />
             <div className="row">
                 <div className="col-md-6 offset-md-3 shadow p-4">
-                    {!qualitiesLoading &&
-                    Object.keys(professions).length > 0 ? (
+                    {!isLoading && Object.keys(professions).length > 0 ? (
                         <form onSubmit={handleSubmit}>
                             <TextField
                                 label="Имя"
@@ -94,7 +136,7 @@ const EditUserPage = () => {
                                 label="Выбери свою профессию"
                                 defaultOption="Choose..."
                                 name="profession"
-                                options={professionList}
+                                options={professionsList}
                                 onChange={handleChange}
                                 value={data.profession}
                                 error={errors.profession}
@@ -114,7 +156,6 @@ const EditUserPage = () => {
                                 defaultValue={data.qualities}
                                 options={qualitiesList}
                                 onChange={handleChange}
-                                values
                                 name="qualities"
                                 label="Выберите ваши качесвта"
                             />

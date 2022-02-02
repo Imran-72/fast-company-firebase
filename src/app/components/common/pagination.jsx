@@ -8,7 +8,7 @@ const Pagination = ({ itemsCount, pageSize, onPageChange, currentPage }) => {
     if (pagesCount === 1) return null;
     return (
         <nav>
-            <ul className="pagination">
+            <ul className="pagination" role="button">
                 {pages.map((page) => (
                     <li
                         key={page}

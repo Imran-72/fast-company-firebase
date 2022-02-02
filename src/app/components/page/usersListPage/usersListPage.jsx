@@ -66,7 +66,7 @@ const UsersListPage = () => {
             ? data.filter(
                   (user) =>
                       JSON.stringify(user.profession) ===
-                      JSON.stringify(selectedProf)
+                      JSON.stringify(selectedProf._id)
               )
             : data;
         return filteredUsers.filter((u) => u._id !== currentUserId);

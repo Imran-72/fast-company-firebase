@@ -6,6 +6,7 @@ import { getDataStatus, loadUsersList } from "../../../store/users";
 const UsersLoader = ({ children }) => {
     const dispatch = useDispatch();
     const dataStatus = useSelector(getDataStatus());
+
     useEffect(() => {
         if (!dataStatus) dispatch(loadUsersList());
     }, []);
