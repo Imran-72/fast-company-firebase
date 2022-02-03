@@ -4,5 +4,10 @@
     { "_id": "67rdca3eeb7f6fgeed471814", "name": "Физик" },
     { "_id": "67rdca3eeb7f6fgeed471822", "name": "Инженер" },
     { "_id": "67rdca3eeb7f6fgeed471824", "name": "Актер" },
-    { "_id": "67rdca3eeb7f6fgeed471829", "name": "Повар" }
+    { "_id": "67rdca3eeb7f6fgeed471829", "name": "Повар" },
+    { "_id": "67rdca3eeb7f6fgeed431829", "name": "Маркетолог" },
+    { "_id": "67rdca3eeb7f6fgeed441829", "name": "Программист" },
+    { "_id": "67rdca3eeb7f6fgeed451829", "name": "Учитель" },
+    { "_id": "67rdca3eeb7f6fgeed461829", "name": "Певец" },
+    { "_id": "67rdca3eeb7f6fgeed411829", "name": "Архитектор" }
 ]

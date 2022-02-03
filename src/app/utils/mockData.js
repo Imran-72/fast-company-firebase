@@ -45,7 +45,15 @@ export const useMockData = () => {
                 incrementCount();
             }
             for (const user of users) {
-                await httpService.put("user/" + user._id, user);
+                console.log(user);
+                await httpService.put("user/" + user._id, {
+                    ...user,
+                    image: `https://avatars.dicebear.com/api/avataaars/${(
+                        Math.random() + 1
+                    )
+                        .toString(36)
+                        .substring(7)}.svg`
+                });
                 incrementCount();
             }
             for (const qual of qualities) {

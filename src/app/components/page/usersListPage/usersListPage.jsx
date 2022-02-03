@@ -21,7 +21,7 @@ const UsersListPage = () => {
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedProf, setSelectedProf] = useState();
     const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
-    const pageSize = 8;
+    const pageSize = 6;
 
     const handleToggleBookMark = (id) => {
         const newArray = users.map((user) => {

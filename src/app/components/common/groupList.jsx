@@ -18,6 +18,7 @@ const GroupList = ({
                             "list-group-item" +
                             (items[item] === selectedItem ? " active" : "")
                         }
+                        style={{ textAlign: "center" }}
                         onClick={() => onItemSelect(items[item])}
                         role="button"
                     >
@@ -36,6 +37,7 @@ const GroupList = ({
                         "list-group-item" +
                         (item === selectedItem ? " active" : "")
                     }
+                    style={{ textAlign: "center" }}
                     onClick={() => onItemSelect(item)}
                     role="button"
                 >
