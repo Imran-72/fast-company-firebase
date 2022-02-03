@@ -23,11 +23,7 @@ export const CommentsProvider = ({ children }) => {
 
     useEffect(() => {
         getComments();
-    }, []);
-
-    useEffect(() => {
-        addToLocalStorage();
-    }, [createComment]);
+    }, [userId]);
 
     async function createComment(data) {
         const comment = {
@@ -45,40 +41,27 @@ export const CommentsProvider = ({ children }) => {
         }
     }
 
-    function addToLocalStorage() {
-        localStorage.setItem("Newcomments", JSON.stringify(comments));
-    }
-
-    function getCommentsFromLocalStorage() {
-        return JSON.parse(localStorage.getItem("Newcomments") || "[]");
+    async function removeComment(id) {
+        try {
+            const { content } = await commentService.removeComment(id);
+            if (content === null) {
+                setComments((prev) => prev.filter((c) => c._id !== id));
+            }
+        } catch (error) {
+            errorCatcher(error);
+        }
     }
 
     async function getComments() {
         try {
-            const data = await getCommentsFromLocalStorage();
-            setComments(data);
+            const { content } = await commentService.getComments(userId);
+            setComments(content);
         } catch (error) {
             errorCatcher(error);
         } finally {
             setLoading(false);
         }
     }
-
-    function removeComment(id) {
-        setComments((prev) => prev.filter((c) => c._id !== id));
-    }
-
-    // async function getComments() {
-    //     try {
-    //         const { content } = await commentService.getComments(userId);
-    //         console.log(content);
-    //         setComments(content);
-    //     } catch (error) {
-    //         errorCatcher(error);
-    //     } finally {
-    //         setLoading(false);
-    //     }
-    // }
     function errorCatcher(error) {
         const { message } = error;
         setError(message);
